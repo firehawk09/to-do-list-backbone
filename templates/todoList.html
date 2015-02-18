@@ -1,0 +1,14 @@
+            <form class="addItemForm">
+                <div class="addItem">
+                    <input type="text" name="John">
+                </div>
+                <button>+</button>
+            </form>
+            <ul>
+            <% _.forEach(data, function(l){ %>
+                <li>
+                    <span class="data"><%= l.title %></span>
+                    <input type="checkbox">
+                </li>
+                <% }) %>
+            </ul>
