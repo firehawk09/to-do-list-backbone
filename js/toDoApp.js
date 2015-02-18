@@ -10,16 +10,20 @@
             this.view1 = new Backbone.TodoView({
                 collection: this.collection
             });
-            // this.view2 = new Backbone.TodoViewDetail({collection: this.collection });
+            this.view2 = new Backbone.TodoViewDetail({});
             Backbone.history.start();
         },
         routes: {
-            "*default": "home"
+            "*default": "home",
+            "details/:item": "showDetail"
         },
         home: function() {
             this.view1.render();
             // this.view2.render(); //Temporary: we'll move the detail view later
-
+        },
+        showDetail: function(item) {
+            // this.view2.render();
+            console.log(item);
         }
     })
 
@@ -67,15 +71,32 @@
         },
         showDetail: function(event){
             event.preventDefault();
-            console.log(event.target.innerHTML);
-            // debugger;
-            console.log("List Item Clicked");
+            // find model
+            var li = event.target.parentElement;
+            var cid = li.getAttribute('cid');
+            var model = this.collection.get(cid);
+            Backbone.trigger("newModelForDetailView", model);
         }
     })
 
     Backbone.TodoViewDetail = Backbone.TemplateView.extend({
         el: ".container2",
-        view: "todoDetails"
+        view: "todoDetails",
+        initialize: function(options) {
+            this.options = options;
+            this.listenTo(Backbone, "newModelForDetailView", this.setModel)
+            this.model && this.model.on("change", this.render.bind(this));
+            this.collection && this.collection.on("add reset remove", this.render.bind(this));
+        },
+        setModel: function(model){
+            if(this.model === model){
+                this.model = null;
+                this.el.innerHTML = "";
+            } else {
+                this.model = model;
+                this.render();
+            }
+        }
     })
 
 })(typeof module === "object" ? module.exports : window)
