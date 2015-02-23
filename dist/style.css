@@ -964,6 +964,14 @@ body {
     .container2 ul li {
       border-bottom: 1px solid #444;
       position: relative; }
+      .container2 ul li input::before {
+        height: 27px;
+        width: 27px;
+        background-color: black; }
+      .container2 ul li input::after {
+        height: 27px;
+        width: 27px;
+        background-color: black; }
       .container2 ul li span {
         display: inline-block;
         padding: 1em 3em 1em 0;
@@ -974,6 +982,10 @@ body {
         position: absolute;
         top: 1em;
         right: 1em; }
+      .container2 ul li input[type="urgentbox"] {
+        position: absolute;
+        bottom: 0;
+        left: 0; }
 
 .container {
   margin: 0 auto;

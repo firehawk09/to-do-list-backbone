@@ -2,7 +2,7 @@
 
     "use strict";
 
-    Backbone.TemplateView = Backbone.View.extend({
+    Parse.TemplateView = Parse.View.extend({
         cache: {},
         stream: function(url) {
             var x = $.Deferred();
@@ -29,8 +29,9 @@
             var self = this;
             this.loadTemplate(this.options.view || this.view).then(function(fn) {
                 var d = self.model || self.collection;
+                // debugger;
                 d && (self.el.innerHTML = fn({
-                    data: d//.toJSON() -- trying this so we can get cid's
+                    data: d//.toJSON() -- trying this so we can get id's
                 }));
             })
         }

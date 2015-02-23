@@ -2,16 +2,16 @@
 (function(exports) {
     "use strict";
 
-    Backbone.TodoRouter = Backbone.Router.extend({
+    Parse.TodoRouter = Parse.Router.extend({
 
         initialize: function() {
             console.log("initialized");
-            this.collection = new Backbone.TodoActualList();
-            this.view1 = new Backbone.TodoView({
+            this.collection = new Parse.TodoActualList();
+            this.view1 = new Parse.TodoView({
                 collection: this.collection
             });
-            this.view2 = new Backbone.TodoViewDetail({});
-            Backbone.history.start();
+            this.view2 = new Parse.TodoViewDetail({});
+            Parse.history.start();
         },
         routes: {
             "*default": "home",
@@ -27,7 +27,8 @@
         }
     })
 
-    Backbone.TodoModel = Backbone.Model.extend({
+    Parse.TodoModel = Parse.Object.extend({
+        className: "taskToDo",
         defaults: {
             "checked": "false",
             "title": "No title given.",
@@ -44,11 +45,15 @@
         }
     })
 
-    Backbone.TodoActualList = Backbone.Collection.extend({
-        model: Backbone.TodoModel
+    Parse.TodoActualList = Parse.Collection.extend({
+        model: Parse.TodoModel
+
+    //     querySelector = new Parse.Query(ParseTodo);
+    //     todos.query = query;
+    //     todos.fetch();
     })
 
-    Backbone.TodoView = Backbone.TemplateView.extend({
+    Parse.TodoView = Parse.TemplateView.extend({
         el: ".container1",
         view: "todoList",
         events: {
@@ -69,27 +74,27 @@
         checked: function() {
 
         },
-        showDetail: function(event){
+        showDetail: function(event) {
             event.preventDefault();
             // find model
             var li = event.target.parentElement;
-            var cid = li.getAttribute('cid');
-            var model = this.collection.get(cid);
-            Backbone.trigger("newModelForDetailView", model);
+            var id = li.getAttribute('id');
+            var model = this.collection.get(id);
+            Parse.trigger("newModelForDetailView", model);
         }
     })
 
-    Backbone.TodoViewDetail = Backbone.TemplateView.extend({
+    Parse.TodoViewDetail = Parse.TemplateView.extend({
         el: ".container2",
         view: "todoDetails",
         initialize: function(options) {
             this.options = options;
-            this.listenTo(Backbone, "newModelForDetailView", this.setModel)
+            // this.listenTo(Parse, "newModelForDetailView", this.setModel)
             this.model && this.model.on("change", this.render.bind(this));
             this.collection && this.collection.on("add reset remove", this.render.bind(this));
         },
-        setModel: function(model){
-            if(this.model === model){
+        setModel: function(model) {
+            if (this.model === model) {
                 this.model = null;
                 this.el.innerHTML = "";
             } else {

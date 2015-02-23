@@ -167,6 +167,16 @@ body {
         li {
             border-bottom: 1px solid #444;
             position: relative;
+            input::before {
+                height: 27px;
+                width: 27px;
+                background-color: black;
+            }
+            input::after {
+                height: 27px;
+                width: 27px;
+                background-color: black;
+            }
             span {
                 display: inline-block;
                 padding: 1em 3em 1em 0;
@@ -179,6 +189,13 @@ body {
                 position: absolute;
                 top: 1em;
                 right: 1em;
+            }
+            input[type="urgentbox"] {
+                position: absolute;
+                // top: 1em;
+                // right: 1em;
+                bottom: 0;
+                left: 0;
             }
         }
     }

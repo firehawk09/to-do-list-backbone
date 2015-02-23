@@ -11,7 +11,8 @@ function app(){
         //js
         {url: "./bower_components/jquery/dist/jquery.min.js"},
         {url: "./bower_components/lodash/lodash.min.js"},
-        {url: "./bower_components/backbone/backbone.js"},
+        // {url: "./bower_components/backbone/backbone.js"},
+        {url: "./bower_components/parse-js-sdk/lib/parse.min.js"},
         // {url: "./bower_components/react/react.min.js"},
         // {url: "./node_modules/jsnox/index.js"},
         {url: "./bower_components/pace/pace.min.js"},
@@ -20,9 +21,10 @@ function app(){
 
     ).then(function(){
         document.querySelector("html").style.opacity = 1;
-        // start app?
-
-        new Backbone.TodoRouter();
+    // connect Parse
+    Parse.initialize("GMGIvGwz3AHgHqE0tN9LeBrxnEuFxtLh1C4lTpYN", "cEw1oA2cNHJm2Jt6g1JmrW1q3ttNAIQEPNOW80Jt");
+    // start app?
+        new Parse.TodoRouter();
     })
 
 }
